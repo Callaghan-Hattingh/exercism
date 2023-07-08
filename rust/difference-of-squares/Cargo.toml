@@ -1,0 +1,9 @@
+[package]
+edition = "2021"
+name = "difference-of-squares"
+version = "1.2.0"
+
+[dependencies]
+num = "0.4"
+
+
