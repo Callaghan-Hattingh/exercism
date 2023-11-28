@@ -8,29 +8,33 @@ pub struct Clock {
 
 impl Clock {
     pub fn new(hours: i32, minutes: i32) -> Self {
-        Clock { hours, minutes } 
+        let mut total_minutes = hours*60 + minutes;
+        while total_minutes < 0 {
+            total_minutes += 24*60;
+
+        }
+        let adjusted_hours =  (total_minutes/ 60)%24;
+        let adjusted_minutes = total_minutes % 60;
+        
+        Clock { hours: adjusted_hours, minutes: adjusted_minutes }
     }
 
     pub fn add_minutes(&self, minutes: i32) -> Self {
-        unimplemented!("Add {minutes} minutes to existing Clock time");
+        let mut total_minutes = self.hours*60 + self.minutes + minutes;
+        while total_minutes < 0 {
+            total_minutes += 24*60;
+
+        }
+        let adjusted_hours =  (total_minutes/ 60)%24;
+        let adjusted_minutes = total_minutes % 60;
+        
+        Clock { hours: adjusted_hours, minutes: adjusted_minutes }
     }
 }
 
 impl fmt::Display for Clock {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        if self.hours > 9 {
-            if self.minutes > 9 {
-                write!(f, "{:?}:{:?}", self.hours, self.minutes)
-            } else {
-                write!(f, "{:?}:0{:?}", self.hours, self.minutes)
-            }
-        } else {
-            if self.minutes > 9 {
-                write!(f, "0{:?}:{:?}", self.hours, self.minutes)
-            }else {
-                write!(f, "0{:?}:0{:?}", self.hours, self.minutes)
-            }
-        }
+        write!(f, "{:02}:{:02}", self.hours, self.minutes)
     }
 }
 
